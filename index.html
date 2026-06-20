@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madan Paudel — Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EF;
+    --ink:#2B2624;
+    --ink-soft:#6b6258;
+    --gold:#9C7A3A;
+    --gold-deep:#7A5C26;
+    --line:#E3DACB;
+    --card-bg:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Montserrat',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 22px;
+    background:rgba(250,246,239,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header .name{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; letter-spacing:.02em;}
+  header nav a{
+    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    text-decoration:none; color:var(--ink-soft); margin-left:18px;
+  }
+  header nav a:hover, header nav a:focus-visible{color:var(--gold-deep);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; height:92vh; min-height:480px;
+    display:flex; align-items:flex-end;
+    overflow:hidden; background:#1d1a16;
+  }
+  .hero img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .6s ease;
+  }
+  .hero img.loaded{opacity:1;}
+  .hero::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(15,12,9,.85) 0%, rgba(15,12,9,.25) 55%, rgba(15,12,9,.05) 100%);
+  }
+  .hero-content{position:relative; z-index:2; padding:0 24px 56px; color:#FAF6EF; max-width:720px;}
+  .hero-content .eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#D8C9A3; margin-bottom:10px;}
+  .hero-content h1{font-size:clamp(38px,9vw,68px); font-weight:600; margin:0 0 10px; line-height:1.02;}
+  .hero-content p{font-size:16px; font-style:italic; font-family:'Cormorant Garamond',serif; color:#EAE2D2; margin:0; max-width:46ch;}
+  .scroll-cue{
+    position:absolute; bottom:18px; right:24px; z-index:2;
+    width:22px; height:34px; border:1.5px solid rgba(250,246,239,.6); border-radius:12px;
+  }
+  .scroll-cue::before{
+    content:''; position:absolute; top:6px; left:50%; width:3px; height:7px; margin-left:-1.5px;
+    background:#FAF6EF; border-radius:2px; animation:scrollcue 1.8s infinite;
+  }
+  @keyframes scrollcue{0%{opacity:1; transform:translateY(0);} 70%{opacity:0; transform:translateY(10px);} 100%{opacity:0;}}
+
+  /* ---------- about ---------- */
+  .about{
+    max-width:680px; margin:0 auto; padding:64px 24px 40px; text-align:center;
+  }
+  .about p{font-size:16px; line-height:1.75; color:var(--ink-soft);}
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:14px 26px; justify-content:center;
+    margin-top:18px; font-size:13px; letter-spacing:.04em;
+  }
+  .contact-row a{text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px;}
+  .contact-row a:hover{border-color:var(--gold);}
+
+  /* ---------- section ---------- */
+  section.series{padding:50px 22px 10px; max-width:1180px; margin:0 auto;}
+  .series-head{margin-bottom:22px;}
+  .series-head .eyebrow{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-deep);}
+  .series-head h2{font-size:30px; margin:4px 0 0; font-weight:600;}
+  hr.rule{border:none; border-top:1px solid var(--line); margin:48px 0 0;}
+
+  .gallery{column-count:1; column-gap:16px;}
+  @media(min-width:640px){.gallery{column-count:2;}}
+  @media(min-width:980px){.gallery{column-count:3;}}
+
+  .card{
+    break-inside:avoid; margin-bottom:16px; position:relative;
+    background:var(--card-bg); box-shadow:0 1px 4px rgba(40,32,20,.10);
+    cursor:pointer; overflow:hidden;
+  }
+  .card img{display:block; width:100%; vertical-align:bottom; transition:transform .5s ease;}
+  .card:hover img{transform:scale(1.025);}
+  .card .cap{
+    position:absolute; left:0; right:0; bottom:0; padding:30px 14px 12px;
+    background:linear-gradient(to top, rgba(20,16,10,.82), rgba(20,16,10,0));
+    color:#FAF6EF; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14.5px; line-height:1.35;
+  }
+  .card:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .card.broken{
+    aspect-ratio:3/4; display:flex; align-items:center; justify-content:center;
+    border:1.5px dashed var(--line); background:#F2ECE0; cursor:default;
+  }
+  .card.broken .msg{
+    font-size:12px; color:var(--ink-soft); text-align:center; padding:18px; line-height:1.6;
+  }
+  .card.broken .msg b{display:block; color:var(--ink); font-family:monospace; font-size:11px; margin-bottom:6px;}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(15,12,9,.94); z-index:100;
+    display:none; align-items:center; justify-content:center; flex-direction:column;
+    padding:30px 16px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-height:78vh; max-width:92vw; box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .lightbox .lb-cap{color:#EAE2D2; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; margin-top:16px; text-align:center; max-width:60ch;}
+  .lightbox .lb-close{position:absolute; top:18px; right:22px; background:none; border:none; color:#FAF6EF; font-size:28px; cursor:pointer; line-height:1;}
+  .lightbox .lb-nav{position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF6EF; font-size:34px; cursor:pointer; padding:10px;}
+  .lightbox .lb-prev{left:6px;} .lightbox .lb-next{right:6px;}
+  .lightbox button:focus-visible{outline:2px solid var(--gold);}
+
+  footer{
+    margin-top:60px; padding:40px 22px 50px; text-align:center;
+    border-top:1px solid var(--line);
+  }
+  footer .name{font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;}
+  footer .loc{font-size:12px; color:var(--ink-soft); letter-spacing:.06em; margin-top:4px;}
+  footer .contact-row{margin-top:16px;}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .scroll-cue::before{animation:none;}
+    .card img, .hero img{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="name">Madan Paudel</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+</header>
+
+<div class="hero" id="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Documentary &amp; Travel Photography</div>
+    <h1>Madan Paudel</h1>
+    <p id="hero-caption">Faces and places across Nepal and India, told one frame at a time.</p>
+  </div>
+  <div class="scroll-cue"></div>
+</div>
+
+<div class="about" id="about">
+  <p>Madan Paudel has been making photographs since October 2022 — mostly with a Sony ZV‑E10 and whatever light the street gives him. He moves between candid portraits of strangers and quieter, posed studies of traditional dress, shot across Nepal and India. He's currently preparing a submission for the NIP Annual Photography Competition 2026, and building a Nepali‑language history documentary series for YouTube.</p>
+  <div class="contact-row">
+    <a href="mailto:contactmp369@gmail.com">contactmp369@gmail.com</a>
+    <a href="tel:+9779865171072">+977 9865171072</a>
+    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">@madaanpaudel</a>
+  </div>
+</div>
+
+<div id="gallery-root"></div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<footer>
+  <div class="name">Madan Paudel</div>
+  <div class="loc">Based in Pokhara, Nepal</div>
+  <div class="contact-row">
+    <a href="mailto:contactmp369@gmail.com">contactmp369@gmail.com</a>
+    <a href="tel:+9779865171072">+977 9865171072</a>
+    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">@madaanpaudel</a>
+  </div>
+</footer>
+
+<script>
+/* =================================================================
+   HOW TO ADD YOUR OWN PHOTOS (Google Drive)
+   1. Upload the photo to Google Drive.
+   2. Right-click the file -> Share -> General access -> "Anyone with the link" -> Viewer.
+   3. Right-click the file -> "Get link" / open it -> copy the long ID in the URL:
+        drive.google.com/file/d/  1AbCxyz123456789  /view
+                                   ^^^^^^^^^^^^^^^^^ this part is the ID
+   4. Paste that ID as the "driveId" value below, for the matching filename.
+   5. Leave driveId as "" for any photo you haven't uploaded yet —
+      it will show a clearly labelled placeholder instead of breaking the page.
+   ================================================================= */
+
+function driveUrl(id, w){
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${w}` : '';
+}
+
+const HERO_PHOTO = { driveId: "", filename: "DSC04980.jpg",
+  caption: "A sadhu raises his hands mid-gesture while bathing in the river at dawn." };
+
+const SECTIONS = [
+  {
+    key: "street", title: "Street Portraits — India",
+    photos: [
+      { driveId: "", filename: "DSC06124.jpg", caption: "A cycle-rickshaw driver takes a quiet drag between fares, India." },
+      { driveId: "", filename: "DSC06107.jpg", caption: "A driver's weathered smile, somewhere on the road, India." },
+      { driveId: "", filename: "IMG_20240614_184313_082.jpg", caption: "A devotee with a fresh tilak, greeting the morning." }
+    ]
+  },
+  {
+    key: "travel-india", title: "Travel — India",
+    photos: [
+      { driveId: "", filename: "DSC08100.jpg", caption: "A boy leads his cow home across a rice field, motion blurring the grass underfoot." },
+      { driveId: "", filename: "DSC07518.jpg", caption: "A boy's eyes after a swim, sand and salt still clinging to his skin." }
+    ]
+  },
+  {
+    key: "heritage", title: "Heritage in Red",
+    photos: [
+      { driveId: "", filename: "DSC00452.jpg", caption: "In traditional Himalayan dress, coin necklaces and a crescent headpiece catch the evening light." },
+      { driveId: "", filename: "DSC00413.jpg", caption: "A quiet smile between portraits, dried corn cobs hanging overhead." },
+      { driveId: "", filename: "DSC00439.jpg", caption: "Basket on her shoulder, marigolds in bloom — a portrait rooted in everyday life." },
+      { driveId: "", filename: "DSC00376.jpg", caption: "Velvet and gold thread pool around her on the doorstep." }
+    ]
+  },
+  {
+    key: "himalaya", title: "Himalayan Days — Nepal",
+    photos: [
+      { driveId: "", filename: "DSC00470__2_.jpg", caption: "A boy and the family's horses, paused on a mountain village street." },
+      { driveId: "", filename: "DSC00287.jpg", caption: "Dappled light, and Machhapuchhre standing guard behind her." },
+      { driveId: "", filename: "DSC09456__1_.jpg", caption: "Morning light through palm leaves, by the lake in Pokhara." }
+    ]
+  },
+  {
+    key: "sea", title: "Between Land and Sea",
+    photos: [
+      { driveId: "", filename: "DSC07737.jpg", caption: "A couple watches the waves roll in under a darkening monsoon sky." },
+      { driveId: "", filename: "DSC07742.jpg", caption: "A stranger's quiet vigil, watching another couple watch the sea." },
+      { driveId: "", filename: "DSC07736.jpg", caption: "Hand in hand at the tideline, dusk settling over the water." },
+      { driveId: "", filename: "DSC07738.jpg", caption: "Wind, motion, and the blue hour — a couple at the edge of the sea." }
+    ]
+  }
+];
+
+// ---- render hero ----
+const heroImg = new Image();
+heroImg.src = driveUrl(HERO_PHOTO.driveId, 1600);
+heroImg.alt = HERO_PHOTO.caption;
+heroImg.onload = () => heroImg.classList.add('loaded');
+document.getElementById('hero').prepend(heroImg);
+document.getElementById('hero-caption').textContent = HERO_PHOTO.caption;
+
+// ---- render sections ----
+const root = document.getElementById('gallery-root');
+const flatPhotos = []; // for lightbox prev/next, in page order
+
+SECTIONS.forEach(sec => {
+  const section = document.createElement('section');
+  section.className = 'series';
+  section.id = sec.key;
+  section.innerHTML = `
+    <hr class="rule">
+    <div class="series-head">
+      <div class="eyebrow">Series</div>
+      <h2>${sec.title}</h2>
+    </div>
+    <div class="gallery"></div>
+  `;
+  const gallery = section.querySelector('.gallery');
+
+  sec.photos.forEach(p => {
+    const idx = flatPhotos.length;
+    flatPhotos.push(p);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex = 0;
+    card.setAttribute('role','button');
+    card.setAttribute('aria-label', 'Open photo: ' + p.caption);
+
+    const url = driveUrl(p.driveId, 900);
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.alt = p.caption;
+    img.src = url || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
+    img.onerror = () => {
+      card.classList.add('broken');
+      card.innerHTML = `<div class="msg"><b>${p.filename}</b>Photo not connected yet.<br>Add this file's Google Drive ID to go live.</div>`;
+    };
+
+    const cap = document.createElement('div');
+    cap.className = 'cap';
+    cap.textContent = p.caption;
+
+    card.appendChild(img);
+    card.appendChild(cap);
+    card.addEventListener('click', () => openLightbox(idx));
+    card.addEventListener('keypress', (e) => { if(e.key==='Enter') openLightbox(idx); });
+
+    gallery.appendChild(card);
+  });
+
+  root.appendChild(section);
+});
+
+// ---- lightbox ----
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCap = document.getElementById('lbCap');
+let currentIdx = 0;
+
+function openLightbox(idx){
+  currentIdx = idx;
+  showCurrent();
+  lb.classList.add('open');
+}
+function showCurrent(){
+  const p = flatPhotos[currentIdx];
+  lbImg.src = driveUrl(p.driveId, 1600);
+  lbImg.alt = p.caption;
+  lbCap.textContent = p.caption;
+}
+function closeLightbox(){ lb.classList.remove('open'); }
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => { currentIdx = (currentIdx - 1 + flatPhotos.length) % flatPhotos.length; showCurrent(); });
+document.getElementById('lbNext').addEventListener('click', () => { currentIdx = (currentIdx + 1) % flatPhotos.length; showCurrent(); });
+lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if(!lb.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+</script>
+</body>
+</html>
