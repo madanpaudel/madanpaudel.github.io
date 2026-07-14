@@ -3,354 +3,384 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madan Paudel — Photography</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Madan Paudel — Documentary & Travel Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#FAF6EF;
-    --ink:#2B2624;
-    --ink-soft:#6b6258;
-    --gold:#9C7A3A;
-    --gold-deep:#7A5C26;
-    --line:#E3DACB;
-    --card-bg:#FFFFFF;
+  :root {
+    --bg: #080808; --surface: #111111; --border: #1e1e1e;
+    --gold: #C8963E; --text: #e8e0d4; --muted: #6b6560; --white: #f5f0eb;
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Montserrat',sans-serif;
-    -webkit-font-smoothing:antialiased;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.2rem 2.5rem;
+    background:rgba(8,8,8,0.92); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
   }
-  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
-  a{color:inherit;}
-  img{max-width:100%;}
-
-  /* ---------- header ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 22px;
-    background:rgba(250,246,239,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--white); text-decoration:none; }
+  .nav-logo span { color:var(--gold); }
+  .nav-links { display:flex; gap:1.8rem; }
+  .nav-links a { font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--gold); }
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:5rem 2.5rem 4rem;
+    position:relative; overflow:hidden; border-bottom:1px solid var(--border);
   }
-  header .name{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; letter-spacing:.02em;}
-  header nav a{
-    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
-    text-decoration:none; color:var(--ink-soft); margin-left:18px;
+  .hero-bg { position:absolute; inset:0; background:linear-gradient(135deg,#0a0a0a 0%,#0f0c0a 60%,#120e0a 100%); }
+  .hero-watermark {
+    position:absolute; right:-2rem; top:50%; transform:translateY(-50%);
+    font-family:'Playfair Display',serif; font-size:22vw; font-weight:600;
+    color:rgba(200,150,62,0.04); pointer-events:none; user-select:none;
   }
-  header nav a:hover, header nav a:focus-visible{color:var(--gold-deep);}
-
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative; height:92vh; min-height:480px;
-    display:flex; align-items:flex-end;
-    overflow:hidden; background:#1d1a16;
+  .hero-content { position:relative; z-index:1; max-width:700px; }
+  .hero-eyebrow { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; }
+  .hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,6vw,5rem); font-weight:400; line-height:1.08; color:var(--white); margin-bottom:1.2rem; }
+  .hero-title em { font-style:italic; color:var(--gold); }
+  .hero-sub { font-size:0.9rem; color:var(--muted); line-height:1.7; max-width:460px; font-weight:300; }
+  .hero-scroll { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:var(--muted); font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; }
+  .scroll-line { width:1px; height:40px; background:linear-gradient(to bottom,var(--gold),transparent); animation:scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+  .series-nav {
+    position:sticky; top:61px; z-index:90;
+    background:rgba(8,8,8,0.95); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border); padding:0 2.5rem;
+    display:flex; gap:0; overflow-x:auto; scrollbar-width:none;
   }
-  .hero img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    opacity:0; transition:opacity .6s ease;
+  .series-nav::-webkit-scrollbar { display:none; }
+  .series-tab {
+    padding:1rem 1.4rem; font-size:0.7rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--muted); cursor:pointer;
+    border-bottom:2px solid transparent; white-space:nowrap;
+    transition:color 0.2s,border-color 0.2s;
+    background:none; border-top:none; border-left:none; border-right:none;
+    font-family:'Inter',sans-serif;
   }
-  .hero img.loaded{opacity:1;}
-  .hero::after{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(15,12,9,.85) 0%, rgba(15,12,9,.25) 55%, rgba(15,12,9,.05) 100%);
-  }
-  .hero-content{position:relative; z-index:2; padding:0 24px 56px; color:#FAF6EF; max-width:720px;}
-  .hero-content .eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#D8C9A3; margin-bottom:10px;}
-  .hero-content h1{font-size:clamp(38px,9vw,68px); font-weight:600; margin:0 0 10px; line-height:1.02;}
-  .hero-content p{font-size:16px; font-style:italic; font-family:'Cormorant Garamond',serif; color:#EAE2D2; margin:0; max-width:46ch;}
-  .scroll-cue{
-    position:absolute; bottom:18px; right:24px; z-index:2;
-    width:22px; height:34px; border:1.5px solid rgba(250,246,239,.6); border-radius:12px;
-  }
-  .scroll-cue::before{
-    content:''; position:absolute; top:6px; left:50%; width:3px; height:7px; margin-left:-1.5px;
-    background:#FAF6EF; border-radius:2px; animation:scrollcue 1.8s infinite;
-  }
-  @keyframes scrollcue{0%{opacity:1; transform:translateY(0);} 70%{opacity:0; transform:translateY(10px);} 100%{opacity:0;}}
-
-  /* ---------- about ---------- */
-  .about{
-    max-width:680px; margin:0 auto; padding:64px 24px 40px; text-align:center;
-  }
-  .about p{font-size:16px; line-height:1.75; color:var(--ink-soft);}
-  .contact-row{
-    display:flex; flex-wrap:wrap; gap:14px 26px; justify-content:center;
-    margin-top:18px; font-size:13px; letter-spacing:.04em;
-  }
-  .contact-row a{text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px;}
-  .contact-row a:hover{border-color:var(--gold);}
-
-  /* ---------- section ---------- */
-  section.series{padding:50px 22px 10px; max-width:1180px; margin:0 auto;}
-  .series-head{margin-bottom:22px;}
-  .series-head .eyebrow{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-deep);}
-  .series-head h2{font-size:30px; margin:4px 0 0; font-weight:600;}
-  hr.rule{border:none; border-top:1px solid var(--line); margin:48px 0 0;}
-
-  .gallery{column-count:1; column-gap:16px;}
-  @media(min-width:640px){.gallery{column-count:2;}}
-  @media(min-width:980px){.gallery{column-count:3;}}
-
-  .card{
-    break-inside:avoid; margin-bottom:16px; position:relative;
-    background:var(--card-bg); box-shadow:0 1px 4px rgba(40,32,20,.10);
-    cursor:pointer; overflow:hidden;
-  }
-  .card img{display:block; width:100%; vertical-align:bottom; transition:transform .5s ease;}
-  .card:hover img{transform:scale(1.025);}
-  .card .cap{
-    position:absolute; left:0; right:0; bottom:0; padding:30px 14px 12px;
-    background:linear-gradient(to top, rgba(20,16,10,.82), rgba(20,16,10,0));
-    color:#FAF6EF; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14.5px; line-height:1.35;
-  }
-  .card:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
-
-  .card.broken{
-    aspect-ratio:3/4; display:flex; align-items:center; justify-content:center;
-    border:1.5px dashed var(--line); background:#F2ECE0; cursor:default;
-  }
-  .card.broken .msg{
-    font-size:12px; color:var(--ink-soft); text-align:center; padding:18px; line-height:1.6;
-  }
-  .card.broken .msg b{display:block; color:var(--ink); font-family:monospace; font-size:11px; margin-bottom:6px;}
-
-  /* ---------- lightbox ---------- */
-  .lightbox{
-    position:fixed; inset:0; background:rgba(15,12,9,.94); z-index:100;
-    display:none; align-items:center; justify-content:center; flex-direction:column;
-    padding:30px 16px;
-  }
-  .lightbox.open{display:flex;}
-  .lightbox img{max-height:78vh; max-width:92vw; box-shadow:0 10px 40px rgba(0,0,0,.5);}
-  .lightbox .lb-cap{color:#EAE2D2; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; margin-top:16px; text-align:center; max-width:60ch;}
-  .lightbox .lb-close{position:absolute; top:18px; right:22px; background:none; border:none; color:#FAF6EF; font-size:28px; cursor:pointer; line-height:1;}
-  .lightbox .lb-nav{position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; color:#FAF6EF; font-size:34px; cursor:pointer; padding:10px;}
-  .lightbox .lb-prev{left:6px;} .lightbox .lb-next{right:6px;}
-  .lightbox button:focus-visible{outline:2px solid var(--gold);}
-
-  footer{
-    margin-top:60px; padding:40px 22px 50px; text-align:center;
-    border-top:1px solid var(--line);
-  }
-  footer .name{font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;}
-  footer .loc{font-size:12px; color:var(--ink-soft); letter-spacing:.06em; margin-top:4px;}
-  footer .contact-row{margin-top:16px;}
-
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto;}
-    .scroll-cue::before{animation:none;}
-    .card img, .hero img{transition:none;}
-  }
+  .series-tab:hover { color:var(--text); }
+  .series-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+  .series-section { padding:5rem 2.5rem; border-bottom:1px solid var(--border); display:none; }
+  .series-section.active { display:block; }
+  .section-header { margin-bottom:3rem; }
+  .section-number { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:400; color:var(--white); margin-bottom:0.8rem; }
+  .section-desc { font-size:0.85rem; color:var(--muted); max-width:520px; line-height:1.7; font-weight:300; }
+  .photo-grid { columns:3; column-gap:6px; }
+  @media(max-width:900px) { .photo-grid { columns:2; } }
+  @media(max-width:540px) { .photo-grid { columns:1; } }
+  .photo-item { break-inside:avoid; margin-bottom:6px; cursor:pointer; position:relative; overflow:hidden; background:var(--surface); display:block; }
+  .photo-item img { width:100%; display:block; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.3s; opacity:0; }
+  .photo-item img.loaded { opacity:1; }
+  .photo-item:hover img { transform:scale(1.03); }
+  .photo-item::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 50%); opacity:0; transition:opacity 0.3s; }
+  .photo-item:hover::after { opacity:1; }
+  .no-photos { text-align:center; padding:5rem 2rem; color:var(--muted); font-size:0.85rem; }
+  .lightbox { position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.96); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; }
+  .lightbox.open { display:flex; }
+  .lightbox-inner { position:relative; max-width:90vw; max-height:90vh; display:flex; align-items:center; justify-content:center; }
+  .lightbox-inner img { max-width:90vw; max-height:90vh; object-fit:contain; display:block; }
+  .lb-close { position:fixed; top:1.5rem; right:2rem; font-size:1.8rem; color:var(--muted); cursor:pointer; background:none; border:none; font-family:'Inter',sans-serif; transition:color 0.2s; z-index:1001; }
+  .lb-close:hover { color:var(--gold); }
+  .lb-nav { position:fixed; top:50%; transform:translateY(-50%); font-size:2rem; color:var(--muted); cursor:pointer; background:none; border:none; padding:1rem; transition:color 0.2s; z-index:1001; }
+  .lb-nav:hover { color:var(--gold); }
+  .lb-prev { left:1rem; } .lb-next { right:1rem; }
+  .lb-counter { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); font-size:0.7rem; letter-spacing:0.15em; color:var(--muted); }
+  .about-section { padding:6rem 2.5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; border-bottom:1px solid var(--border); }
+  @media(max-width:700px) { .about-section { grid-template-columns:1fr; } }
+  .about-label { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; }
+  .about-title { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3vw,2.2rem); line-height:1.2; color:var(--white); margin-bottom:1.5rem; }
+  .about-text { font-size:0.88rem; color:var(--muted); line-height:1.85; font-weight:300; }
+  .about-details { display:flex; flex-direction:column; gap:1.2rem; padding-top:2rem; }
+  .detail-item { border-top:1px solid var(--border); padding-top:1.2rem; }
+  .detail-label { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem; }
+  .detail-value { font-size:0.85rem; color:var(--text); }
+  footer { padding:3rem 2.5rem; text-align:center; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+  .footer-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--white); }
+  .footer-links { display:flex; gap:2rem; }
+  .footer-links a { font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--gold); }
+  .footer-copy { font-size:0.7rem; color:var(--border); margin-top:0.5rem; }
+  .skeleton { background:linear-gradient(90deg,var(--surface) 25%,var(--border) 50%,var(--surface) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; min-height:200px; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  @media(max-width:600px) { nav{padding:1rem 1.2rem;} .nav-links{gap:1rem;} .hero{padding:4rem 1.2rem 3rem;} .series-nav{padding:0 1rem;} .series-section{padding:3rem 1.2rem;} .about-section{padding:3rem 1.2rem;} footer{padding:2rem 1.2rem;} }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="name">Madan Paudel</div>
-  <nav>
+<script>
+const PORTFOLIO = {
+
+  "Street Portraits India": [
+    { file:"DSC08477",     driveId:"174qyKpTjlSnXtnz9j3dfnfIwlbHkVEUu" },
+    { file:"DSC08484",     driveId:"10za6C8sf5hBmNwXy0Dkk5lT70_xR2fE1" },
+    { file:"DSC00923",     driveId:"1ze3qgM5oqVA7DFqei0aQR7Ah4KZLc68X" },
+    { file:"DSC00735",     driveId:"1JJxCPqb_alGJxk_tpYQdLsCik4x45fl2" },
+    { file:"DSC08855",     driveId:"1TiVNy0LLIe0OGLj0u_jia8AJ8Ta9gIge" },
+    { file:"DSC08513",     driveId:"1xax_EJKCkaw0GyyHQ1QdXt3dh4jILb1g" },
+    { file:"DSC02296",     driveId:"1ho7o6xOPz9vs_Lsz7swYq4UYFSmjV94z" },
+    { file:"DSC01044__1_", driveId:"1VE7fcp2vzzmJaIATCO4PU1qghCMYiS9N" },
+    { file:"DSC01604__1_", driveId:"1tgvF_aA9pdNsDIb4c4-r2rZ7IA6vrU_N" },
+    { file:"DSC01415__2_", driveId:"1iUoXNKE9WkOkNnTdVQGhAP8FYVz4A3fN" },
+    { file:"DSC00946",     driveId:"1NJXu8SfjuAPlM3oLLlImgQ3c6wtvLDmZ" },
+    { file:"DSC08914",     driveId:"1A_hYQNGXQ5JgNT6ufBaDzaS61iG3QpIe" },
+    { file:"DSC08912__1_", driveId:"1jentjhDjwxkH-W8ueJAoAT-Z3t4oMQJT" },
+    { file:"DSC06114",     driveId:"1RslpHkyw8wI2pAJGu4OvitBcaqP6bi7t" },
+    { file:"DSC06124",     driveId:"16Z4CW83S72PIND31XYTxBr4nH4R2a7qX" },
+    { file:"DSC01114",     driveId:"1X7J1vO-S1O6cI1plpSd9Pl9Hg3gwAEEb" },
+    { file:"DSC00740_1",   driveId:"1oHW7MLlf4crKa4EEvUi5LRUJROoiBw_7" },
+  ],
+
+  "Travel India": [
+    { file:"DSC09539",     driveId:"1i75CfYggh8xiqh_dOR0HZLo2J_rlVgss" },
+    { file:"DSC09439_1",   driveId:"1mL3wvy18LyNTlOAaTPehjCPh9QS4A8mL" },
+    { file:"DSC09655",     driveId:"1kbOXMVSnSTiA6YW_HTR5mBWpyrK030Ph" },
+    { file:"DSC09739__1_", driveId:"17o2f1h5xZgBkVNfeHUjbiCDj9AKZ6DA1" },
+    { file:"DSC09792",     driveId:"1EbKKp9viLTf3TKeCmwxfq4UTa-bew-9V" },
+    { file:"DSC09748",     driveId:"1RwG37lbG5kM4JxXl9TNH01lMmkp333tS" },
+    { file:"DSC07408",     driveId:"1JBKIK4ITJH1DCQudzeMUBSy7j2NJwkDp" },
+    { file:"DSC08174",     driveId:"18-yBO7NNvqS9CjJXZbDgg-iq09wwgKx9" },
+    { file:"DSC08051",     driveId:"1-FbSH-SwRr_EUkAOtNbkPBBclwtzAysL" },
+    { file:"DSC08090__1_", driveId:"1qJv78QT9bO5fstoCESVI4Kpkq-rROBDY" },
+    { file:"DSC08390",     driveId:"1WA7IbeAgk3gIK61nkV6HFg8t5Tkihhtp" },
+    { file:"DSC07474",     driveId:"1txYSilGuWP9bHNIBL7FhfTW1ACD1_7FO" },
+    { file:"DSC08316",     driveId:"1kDgQc9lpQ-JhpZ14iVe2w5Hu8z4qDpcR" },
+    { file:"DSC05132",     driveId:"1zOJo6XqPQ_-f7_76NIlhXXD4-HLmz0SP" },
+    { file:"DSC05180",     driveId:"1PNi0_xCLmyRAGYzrjHV1wHA3q1qikof-" },
+    { file:"DSC07518",     driveId:"1Z3Lv4LteCiGHOmSJFMgS3kC71VNJXAq-" },
+    { file:"DSC05174",     driveId:"1X-pFaCN6w-N8HikyfStIKplINdsvo4zE" },
+    { file:"DSC08100",     driveId:"1y2BsyPGCaLc9FItCjPeNRYTtC8rcuiN2" },
+    { file:"DSC06755",     driveId:"151TSYspN9HldUADkDVZEn2VAT-DTYPSQ" },
+    { file:"DSC07621",     driveId:"1ITzpOlcd4C-RmtPGHj0WjTvEvoNitZDx" },
+    { file:"DSC07712",     driveId:"1uYKNeeCylmYfPwFvawcSRgD31SL4zhBK" },
+  ],
+
+  "Heritage in Red": [
+    { file:"DSC07505__2_", driveId:"1MHZyBI6-xi3h720t-XTJrpYqzfh-LiPv" },
+    { file:"DSC04435",     driveId:"1fXlOuLKxMNIKrloMZpp6NmySv2ybMSOa" },
+    { file:"DSC04424",     driveId:"1OLogeTYSypuqyAH8kcNI7hX67kqVCwoC" },
+    { file:"DSC04400",     driveId:"1gkxF0ZTo5HAHC5EN2frnQAN1B6afrhfl" },
+    { file:"1000002923",   driveId:"1l_OhhudpL4jHLOqru2qxy3L1Hg6GRfm7" },
+    { file:"DSC07218",     driveId:"1XjfEe29CGnS5zqDSqedY0LcKVU1u4j7o" },
+    { file:"DSC01558",     driveId:"1BzAHSsJlRO-JQUbU3WutGOpLNxVaibCo" },
+    { file:"DSC01494_1",   driveId:"1lReqq8QolckzHz0dV9BP0bBW3ZtNvQ7V" },
+    { file:"DSC09882",     driveId:"1x74q9UcmUXS4Q3MdO2pv4IpqBbpHehDv" },
+    { file:"DSC09972",     driveId:"1EmsNtmuW8drJhWsw2THIVIlD6GXeTz9E" },
+    { file:"DSC08299",     driveId:"1ZymAp_ZxY_TZ9ZvmnggBP4CEH8bHi99X" },
+    { file:"DSC03904__1_", driveId:"1pp-TelTO2gvS79dpWH7YHA05wRbLCsKm" },
+    { file:"DSC03815",     driveId:"14btcCHYGlj2g51Mjfda0HZ4DBgUatkC6" },
+    { file:"DSC09964",     driveId:"1yOu-uNOxEL_3HYDuILQeY6_Fiy1arpfW" },
+    { file:"DSC04098",     driveId:"1c0IoxiSUZvABsuPhcNGvhTmJL9Bsi_aP" },
+    { file:"DSC00361",     driveId:"1jxrN3qMkc0W_dXleLNDueEz3ajOJIr8U" },
+    { file:"DSC04980",     driveId:"1gFzavDGdhERB68J1YpDKF1ec08toHYEk" },
+    { file:"DSC04016__1_", driveId:"1IDVwJ5OTDKpDj8-7Nxpt52Qfn327Ttyx" },
+    { file:"DSC03904",     driveId:"1V3Apk7aeNbwtzhF4bJGt44zZYBumUHMy" },
+    { file:"DSC03732",     driveId:"1jiHngpwkzF8b9aiFOFGfqfvVk3vMkGhW" },
+    { file:"DSC00376",     driveId:"1OlZ4iEO5ZBMxnngVMzy5GhGQ17ES4MKq" },
+    { file:"DSC09379",     driveId:"1-muU0a06kxMgXwp5CPPhBvu4a4qGDo6X" },
+    { file:"DSC05811",     driveId:"1-mhcGE56eGQ0S_72P2p0R68tLv3ILhFU" },
+    { file:"DSC07624",     driveId:"17sUH8GM_Shalk8POn0ICnJgb0aXHYCYx" },
+    { file:"DSC04902",     driveId:"1zo_i5c9gGl2YP1xJ4OvGb0GtnznMUrNJ" },
+    { file:"DSC05790",     driveId:"1sQijJLs5aLnLqPZaDz8HDPwbqJpPHcE_" },
+    { file:"DSC04060",     driveId:"11LCe62hvJNstjHI6pCxt0w9DGg5LVtmT" },
+    { file:"DSC03799__1_", driveId:"1yzQdXqK_Sr1w2jBveA0x6c53K7mdXLHT" },
+  ],
+
+  "Himalayan Days Nepal": [
+    { file:"DSC03514",       driveId:"1B3WZL_JD_fX-woCkeh_wEbp_EaNsb7b2" },
+    { file:"DSC03327",       driveId:"1sspdIH3NnZ7ml_mkX4GQi1VN8KuvF2u0" },
+    { file:"DSC02982",       driveId:"1duJAYn2nQ5yaY4ZW_Fmfstr_JUspEDjP" },
+    { file:"DSC03272",       driveId:"1AezINpeXdLSyTeavM24bnHsvxWFBRCvO" },
+    { file:"DSC02961",       driveId:"1iQd9Qfq0vTaBRYqNLa7GijoSpkVWvvCx" },
+    { file:"DSC03353",       driveId:"1-TwAAb4auBdriyEIVHoAxVAYLS4_ATqW" },
+    { file:"DSC03161",       driveId:"1mSpZQeIkIaBxzrQwj0D7M89craQa5423" },
+    { file:"DSC02824__1_",   driveId:"1wVl8Z0-c3ju0jVlQpPd4ah4QHJcrLRHH" },
+    { file:"DSC02673",       driveId:"1VZOk9nPaIBezuXeHMQVG6feCmxC98SEa" },
+    { file:"DSC02974_1__1_", driveId:"1vp3eRYiGbWmwDbTYJiG7oyKmdYZAUABP" },
+    { file:"1000002996",     driveId:"1AKeSOiaq8sc06Xb4JDB6Al58BRnO0BJJ" },
+    { file:"DSC04507-2",     driveId:"1kVcBZq36gSB-BQ1hyxdeYY0kqsrBhqSQ" },
+    { file:"DSC00470__2_",   driveId:"1hlj3R4hslCHWqR-CRWU_Gp14azYQ5L3A" },
+    { file:"DSC00191",       driveId:"1ayuaVf5RtlGLZY53ynmC-vcxpH_vehc2" },
+    { file:"DSC00351",       driveId:"1bBT58ylJAsfUlxjMHkrykXn0-JfkaRnp" },
+    { file:"DSC00127",       driveId:"1-DWXXkIh8liBQmPYbnuWal-VTZvgAB0D" },
+    { file:"DSC00028",       driveId:"1fM4psDhbphxZYwxVgts_ujl4x3k6ri1S" },
+    { file:"DSC09973",       driveId:"1vMGTf6eRYs6qD4XhDdtR_4xBGqUqx1Ec" },
+    { file:"DSC09763",       driveId:"1ltLLa9GadsHhfjIopEruIXw1FS9MC5-e" },
+    { file:"DSC04186",       driveId:"10TZrV1wmZby_hpwSCIWBCDEsPjhKkwQk" },
+    { file:"DSC00287",       driveId:"1yuUQfHAmP2damB_4d1BA0p7s-8s6DzRz" },
+    { file:"DSC09423",       driveId:"1safLNFmZ5vghWLOLAUovlAbOqAMLoEDO" },
+    { file:"DSC00384",       driveId:"1szp21c6LoF_zat6aNnFoBtBK-obe40gP" },
+    { file:"DSC00431",       driveId:"1rCANXvdclJC9JorS4uUtQi64wunQeqVg" },
+    { file:"DSC00006",       driveId:"15rM1i4LhLq3DjcbE93JzzIqS8z5x7_xf" },
+    { file:"DSC00011",       driveId:"1Qc1tET_hkLJHsRiwIImd2OjAeZjLl3Vd" },
+    { file:"DSC09928",       driveId:"1Wz5OhSgfAc3NAyRFSziMzX5cYyqpJu0o" },
+    { file:"DSC00332",       driveId:"1H_XA5mq_Y4YgnwFD_-wD0emS-V9gLcge" },
+  ],
+
+  "Between Land and Sea": [
+    { file:"DSC07737", driveId:"1jop154GeqAjKujUXFNXbE6hQARTfm08B" },
+    { file:"DSC09874", driveId:"18U_40YKK1UOFSqkQE5QZvHpQpsRzO2xz" },
+    { file:"DSC04910", driveId:"1bTEiR_LWC0Gs9YcaAyYGyn0W8YJM9HbK" },
+    { file:"DSC09456", driveId:"1yWczAfIHDa8qe69b5L1ua7xSy9lnNr_7" },
+  ],
+
+};
+
+const SERIES_DESC = {
+  "Street Portraits India": "Faces caught in the chaos and calm of India — sadhus, pilgrims, strangers who paused long enough to be seen.",
+  "Travel India": "The road between rituals. Fields at dusk, rivers at dawn, and the quiet geometry of ordinary life.",
+  "Heritage in Red": "Sacred fire and ancient stone. The devotional landscape of the subcontinent — temples, ghats, and those who keep the flame.",
+  "Himalayan Days Nepal": "Altitude and awe. The Annapurna trail through rhododendron forests, misty passes, and villages suspended in time.",
+  "Between Land and Sea": "Margins. The thin line where water meets land, where light dissolves into horizon.",
+};
+
+function thumb(id, size='w600') {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=${size}`;
+}
+</script>
+
+<nav>
+  <a class="nav-logo" href="#">Madan <span>Paudel</span></a>
+  <div class="nav-links">
+    <a href="#portfolio">Work</a>
     <a href="#about">About</a>
-    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">Instagram</a>
-  </nav>
-</header>
+    <a href="https://instagram.com/madaanpaudel" target="_blank">Instagram</a>
+  </div>
+</nav>
 
-<div class="hero" id="hero">
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-watermark">MP</div>
   <div class="hero-content">
-    <div class="eyebrow">Documentary &amp; Travel Photography</div>
-    <h1>Madan Paudel</h1>
-    <p id="hero-caption">Faces and places across Nepal and India, told one frame at a time.</p>
+    <p class="hero-eyebrow">Documentary & Travel Photography · Nepal</p>
+    <h1 class="hero-title">Where the <em>sacred</em><br>meets the street</h1>
+    <p class="hero-sub">Five series across Nepal and India — portraits, pilgrimages, and the landscapes that hold them.</p>
   </div>
-  <div class="scroll-cue"></div>
-</div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
 
-<div class="about" id="about">
-  <p>Madan Paudel has been making photographs since October 2022 — mostly with a Sony ZV‑E10 and whatever light the street gives him. He moves between candid portraits of strangers and quieter, posed studies of traditional dress, shot across Nepal and India. He's currently preparing a submission for the NIP Annual Photography Competition 2026, and building a Nepali‑language history documentary series for YouTube.</p>
-  <div class="contact-row">
-    <a href="mailto:contactmp369@gmail.com">contactmp369@gmail.com</a>
-    <a href="tel:+9779865171072">+977 9865171072</a>
-    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">@madaanpaudel</a>
-  </div>
-</div>
-
-<div id="gallery-root"></div>
+<div class="series-nav" id="portfolio"></div>
+<div id="series-container"></div>
 
 <div class="lightbox" id="lightbox">
-  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
-  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
-  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
-  <img id="lbImg" src="" alt="">
-  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8592;</button>
+  <div class="lightbox-inner"><img id="lb-img" src="" alt=""></div>
+  <button class="lb-nav lb-next" onclick="lbNav(1)">&#8594;</button>
+  <div class="lb-counter" id="lb-counter"></div>
 </div>
 
-<footer>
-  <div class="name">Madan Paudel</div>
-  <div class="loc">Based in Pokhara, Nepal</div>
-  <div class="contact-row">
-    <a href="mailto:contactmp369@gmail.com">contactmp369@gmail.com</a>
-    <a href="tel:+9779865171072">+977 9865171072</a>
-    <a href="https://instagram.com/madaanpaudel" target="_blank" rel="noopener">@madaanpaudel</a>
+<section class="about-section" id="about">
+  <div>
+    <p class="about-label">About</p>
+    <h2 class="about-title">Shooting since 2022,<br>based in Nepal</h2>
+    <p class="about-text">I picked up a camera in October 2022 and haven't put it down. My work moves between documentary and travel photography — drawn to ritual, landscape, and the quiet dignity of people going about their lives in sacred places.<br><br>Much of my work has been made in Nepal and across northern India: the ghats of Vrindavan and Mathura, the rhododendron trails above Pokhara, the crowded streets of Holi, the misty pre-dawn of Pashupatinath.</p>
   </div>
+  <div class="about-details">
+    <div class="detail-item"><p class="detail-label">Camera</p><p class="detail-value">Sony ZV-E10</p></div>
+    <div class="detail-item"><p class="detail-label">Based</p><p class="detail-value">Nepal</p></div>
+    <div class="detail-item"><p class="detail-label">Instagram</p><p class="detail-value"><a href="https://instagram.com/madaanpaudel" target="_blank" style="color:var(--gold);text-decoration:none;">@madaanpaudel</a></p></div>
+    <div class="detail-item"><p class="detail-label">Active since</p><p class="detail-value">October 2022</p></div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-name">Madan Paudel</p>
+  <div class="footer-links">
+    <a href="https://instagram.com/madaanpaudel" target="_blank">Instagram</a>
+    <a href="mailto:contactmp369@gmail.com">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 Madan Paudel. All rights reserved.</p>
 </footer>
 
 <script>
-/* =================================================================
-   HOW TO ADD YOUR OWN PHOTOS (Google Drive)
-   1. Upload the photo to Google Drive.
-   2. Right-click the file -> Share -> General access -> "Anyone with the link" -> Viewer.
-   3. Right-click the file -> "Get link" / open it -> copy the long ID in the URL:
-        drive.google.com/file/d/  1AbCxyz123456789  /view
-                                   ^^^^^^^^^^^^^^^^^ this part is the ID
-   4. Paste that ID as the "driveId" value below, for the matching filename.
-   5. Leave driveId as "" for any photo you haven't uploaded yet —
-      it will show a clearly labelled placeholder instead of breaking the page.
-   ================================================================= */
+const seriesKeys = Object.keys(PORTFOLIO);
+const nav = document.querySelector('.series-nav');
+const container = document.getElementById('series-container');
+let currentSeries = [];
+let currentIndex = 0;
 
-function driveUrl(id, w){
-  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${w}` : '';
-}
+seriesKeys.forEach((series, i) => {
+  const tab = document.createElement('button');
+  tab.className = 'series-tab' + (i===0?' active':'');
+  tab.textContent = series;
+  tab.onclick = () => switchSeries(i);
+  nav.appendChild(tab);
 
-const HERO_PHOTO = { driveId: "", filename: "DSC04980.jpg",
-  caption: "A sadhu raises his hands mid-gesture while bathing in the river at dawn." };
+  const sec = document.createElement('section');
+  sec.className = 'series-section' + (i===0?' active':'');
+  sec.id = 'series-' + i;
 
-const SECTIONS = [
-  {
-    key: "street", title: "Street Portraits — India",
-    photos: [
-      { driveId: "", filename: "DSC06124.jpg", caption: "A cycle-rickshaw driver takes a quiet drag between fares, India." },
-      { driveId: "", filename: "DSC06107.jpg", caption: "A driver's weathered smile, somewhere on the road, India." },
-      { driveId: "", filename: "IMG_20240614_184313_082.jpg", caption: "A devotee with a fresh tilak, greeting the morning." }
-    ]
-  },
-  {
-    key: "travel-india", title: "Travel — India",
-    photos: [
-      { driveId: "", filename: "DSC08100.jpg", caption: "A boy leads his cow home across a rice field, motion blurring the grass underfoot." },
-      { driveId: "", filename: "DSC07518.jpg", caption: "A boy's eyes after a swim, sand and salt still clinging to his skin." }
-    ]
-  },
-  {
-    key: "heritage", title: "Heritage in Red",
-    photos: [
-      { driveId: "", filename: "DSC00452.jpg", caption: "In traditional Himalayan dress, coin necklaces and a crescent headpiece catch the evening light." },
-      { driveId: "", filename: "DSC00413.jpg", caption: "A quiet smile between portraits, dried corn cobs hanging overhead." },
-      { driveId: "", filename: "DSC00439.jpg", caption: "Basket on her shoulder, marigolds in bloom — a portrait rooted in everyday life." },
-      { driveId: "", filename: "DSC00376.jpg", caption: "Velvet and gold thread pool around her on the doorstep." }
-    ]
-  },
-  {
-    key: "himalaya", title: "Himalayan Days — Nepal",
-    photos: [
-      { driveId: "", filename: "DSC00470__2_.jpg", caption: "A boy and the family's horses, paused on a mountain village street." },
-      { driveId: "", filename: "DSC00287.jpg", caption: "Dappled light, and Machhapuchhre standing guard behind her." },
-      { driveId: "", filename: "DSC09456__1_.jpg", caption: "Morning light through palm leaves, by the lake in Pokhara." }
-    ]
-  },
-  {
-    key: "sea", title: "Between Land and Sea",
-    photos: [
-      { driveId: "", filename: "DSC07737.jpg", caption: "A couple watches the waves roll in under a darkening monsoon sky." },
-      { driveId: "", filename: "DSC07742.jpg", caption: "A stranger's quiet vigil, watching another couple watch the sea." },
-      { driveId: "", filename: "DSC07736.jpg", caption: "Hand in hand at the tideline, dusk settling over the water." },
-      { driveId: "", filename: "DSC07738.jpg", caption: "Wind, motion, and the blue hour — a couple at the edge of the sea." }
-    ]
-  }
-];
+  const photos = PORTFOLIO[series].filter(p => p.driveId !== '');
+  const total = PORTFOLIO[series].length;
+  const filled = photos.length;
 
-// ---- render hero ----
-const heroImg = new Image();
-heroImg.src = driveUrl(HERO_PHOTO.driveId, 1600);
-heroImg.alt = HERO_PHOTO.caption;
-heroImg.onload = () => heroImg.classList.add('loaded');
-document.getElementById('hero').prepend(heroImg);
-document.getElementById('hero-caption').textContent = HERO_PHOTO.caption;
-
-// ---- render sections ----
-const root = document.getElementById('gallery-root');
-const flatPhotos = []; // for lightbox prev/next, in page order
-
-SECTIONS.forEach(sec => {
-  const section = document.createElement('section');
-  section.className = 'series';
-  section.id = sec.key;
-  section.innerHTML = `
-    <hr class="rule">
-    <div class="series-head">
-      <div class="eyebrow">Series</div>
-      <h2>${sec.title}</h2>
+  sec.innerHTML = `
+    <div class="section-header">
+      <p class="section-number">Series ${String(i+1).padStart(2,'0')} / ${String(seriesKeys.length).padStart(2,'0')}</p>
+      <h2 class="section-title">${series}</h2>
+      <p class="section-desc">${SERIES_DESC[series]}</p>
+      ${filled < total ? `<p style="margin-top:0.8rem;font-size:0.7rem;color:var(--muted);">${filled} of ${total} photos loaded</p>` : ''}
     </div>
-    <div class="gallery"></div>
+    <div class="photo-grid" id="grid-${i}"></div>
   `;
-  const gallery = section.querySelector('.gallery');
+  container.appendChild(sec);
 
-  sec.photos.forEach(p => {
-    const idx = flatPhotos.length;
-    flatPhotos.push(p);
-
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.tabIndex = 0;
-    card.setAttribute('role','button');
-    card.setAttribute('aria-label', 'Open photo: ' + p.caption);
-
-    const url = driveUrl(p.driveId, 900);
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    img.alt = p.caption;
-    img.src = url || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-
-    img.onerror = () => {
-      card.classList.add('broken');
-      card.innerHTML = `<div class="msg"><b>${p.filename}</b>Photo not connected yet.<br>Add this file's Google Drive ID to go live.</div>`;
-    };
-
-    const cap = document.createElement('div');
-    cap.className = 'cap';
-    cap.textContent = p.caption;
-
-    card.appendChild(img);
-    card.appendChild(cap);
-    card.addEventListener('click', () => openLightbox(idx));
-    card.addEventListener('keypress', (e) => { if(e.key==='Enter') openLightbox(idx); });
-
-    gallery.appendChild(card);
-  });
-
-  root.appendChild(section);
+  const grid = sec.querySelector(`#grid-${i}`);
+  if (photos.length === 0) {
+    grid.innerHTML = `<div class="no-photos">Photos coming soon.</div>`;
+  } else {
+    photos.forEach((p, j) => {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.onclick = () => openLightbox(i, j);
+      const skel = document.createElement('div');
+      skel.className = 'skeleton';
+      const img = document.createElement('img');
+      img.src = thumb(p.driveId, 'w600');
+      img.alt = p.file;
+      img.loading = 'lazy';
+      img.onload = () => { img.classList.add('loaded'); skel.remove(); };
+      img.onerror = () => { item.style.display='none'; };
+      item.appendChild(skel);
+      item.appendChild(img);
+      grid.appendChild(item);
+    });
+  }
 });
 
-// ---- lightbox ----
-const lb = document.getElementById('lightbox');
-const lbImg = document.getElementById('lbImg');
-const lbCap = document.getElementById('lbCap');
-let currentIdx = 0;
-
-function openLightbox(idx){
-  currentIdx = idx;
-  showCurrent();
-  lb.classList.add('open');
+function switchSeries(i) {
+  document.querySelectorAll('.series-tab').forEach((t,ti) => t.classList.toggle('active', ti===i));
+  document.querySelectorAll('.series-section').forEach((s,si) => s.classList.toggle('active', si===i));
+  document.getElementById('series-'+i).scrollIntoView({behavior:'smooth',block:'start'});
 }
-function showCurrent(){
-  const p = flatPhotos[currentIdx];
-  lbImg.src = driveUrl(p.driveId, 1600);
-  lbImg.alt = p.caption;
-  lbCap.textContent = p.caption;
-}
-function closeLightbox(){ lb.classList.remove('open'); }
 
-document.getElementById('lbClose').addEventListener('click', closeLightbox);
-document.getElementById('lbPrev').addEventListener('click', () => { currentIdx = (currentIdx - 1 + flatPhotos.length) % flatPhotos.length; showCurrent(); });
-document.getElementById('lbNext').addEventListener('click', () => { currentIdx = (currentIdx + 1) % flatPhotos.length; showCurrent(); });
-lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
-document.addEventListener('keydown', (e) => {
-  if(!lb.classList.contains('open')) return;
-  if(e.key === 'Escape') closeLightbox();
-  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
-  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+function openLightbox(seriesIndex, photoIndex) {
+  currentSeries = PORTFOLIO[seriesKeys[seriesIndex]].filter(p => p.driveId !== '');
+  currentIndex = photoIndex;
+  showLbPhoto();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function showLbPhoto() {
+  document.getElementById('lb-img').src = thumb(currentSeries[currentIndex].driveId, 'w1200');
+  document.getElementById('lb-counter').textContent = `${currentIndex+1} / ${currentSeries.length}`;
+}
+function lbNav(dir) {
+  currentIndex = (currentIndex + dir + currentSeries.length) % currentSeries.length;
+  showLbPhoto();
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e) { if(e.target===this) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key==='Escape') closeLightbox();
+  if (e.key==='ArrowLeft') lbNav(-1);
+  if (e.key==='ArrowRight') lbNav(1);
 });
 </script>
 </body>
