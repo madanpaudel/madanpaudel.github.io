@@ -24,6 +24,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overf
 /* ── CURSOR ── */
 .cursor{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference;}
 .cursor-ring{width:36px;height:36px;border:1px solid rgba(201,151,63,0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all 0.12s ease;}
+@media(hover:none),(pointer:coarse){.cursor,.cursor-ring{display:none;}}
 
 /* ── NAV ── */
 nav{
@@ -72,12 +73,9 @@ nav.scrolled{background:rgba(10,9,7,0.96);backdrop-filter:blur(16px);padding:1re
   justify-content:flex-end;padding:0 3rem 5rem;
   position:relative;overflow:hidden;
 }
-.hero-bg{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom, rgba(10,9,7,0.3) 0%, rgba(10,9,7,0.1) 40%, rgba(10,9,7,0.85) 100%),
-    url('https://drive.google.com/thumbnail?id=1MHZyBI6-xi3h720t-XTJrpYqzfh-LiPv&sz=w1600') center/cover no-repeat;
-}
+.hero-bg{position:absolute;inset:0;overflow:hidden;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,9,7,0.25) 0%,rgba(10,9,7,0.05) 35%,rgba(10,9,7,0.88) 100%);}
 .hero-overlay{position:absolute;inset:0;background:rgba(10,9,7,0.45);}
 .hero-content{position:relative;z-index:2;max-width:800px;}
 .hero-tag{
@@ -419,7 +417,9 @@ function thumb(id,sz='w600'){return`https://drive.google.com/thumbnail?id=${id}&
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <img src="https://drive.google.com/thumbnail?id=1iUoXNKE9WkOkNnTdVQGhAP8FYVz4A3fN&sz=w1600" alt="Hero">
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num">99+</div><div class="stat-label">Images</div></div>
